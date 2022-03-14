@@ -1,10 +1,9 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-parcelize'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
-    id 'androidx.navigation.safeargs.kotlin'
 }
 
 apply from: '../dependencies.gradle'
@@ -13,7 +12,6 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.shiraj.twitterclonedemo"
         minSdk 21
         targetSdk 32
         versionCode 1
@@ -36,62 +34,35 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        viewBinding true
-        dataBinding true
-    }
-}
-
-kapt {
-    correctErrorTypes true
 }
 
 dependencies {
 
     implementation project(path: ':domain')
-    implementation project(path: ':data')
-
     implementation androidx.coreKtx
     implementation androidx.appCompat
-    implementation androidx.constraintlayout
-    implementation androidx.lifecycleExt
-    implementation google.material
-
-    //Activity extension, referring with  "by viewModels"
-    implementation androidx.activityKtx
-
-    //Adding Swipe Refresh Layout Dependency
-    implementation androidx.swiperefreshlayout
-
-    // LiveData
-    implementation androidx.lifecycleLiveData
-
-    // ViewModel
-    implementation androidx.lifecycleViewModel
-
-    // Navigation
-    implementation androidx.navigationFragment
-    implementation androidx.navigationUi
-
-    //DI Hilt
-    implementation hilt.hiltAndroid
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    kapt hilt.kaptHiltAndroidCompiler
-
-    //For Hilt support for ViewModel
-    implementation hilt.hiltViewModel
-    kapt hilt.kaptHiltCompiler
-
-    //Glide
-    implementation image.glide
-    annotationProcessor image.glideCompiler
 
     //Coroutines
     implementation kotlin.kotlinxCoroutines
 
-    // optional - Test helpers for LiveData
-    testImplementation testing.unitTestingCore
+    //DI Hilt
+    implementation hilt.hiltAndroid
+    kapt hilt.kaptHiltAndroidCompiler
 
+    //Network
+    implementation network.retrofit
+    implementation network.retrofitGsonConverter
+    implementation network.okhttp
+    implementation network.okhttpLoggingInterceptor
+
+    //Room Database
+    implementation androidx.roomDb
+    kapt androidx.kaptRoomDb
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation androidx.roomKtx
+
+    testImplementation testing.unitTestingCore
     // Coroutine Testing
     testImplementation testing.unitTestingCoroutines
     testImplementation testing.unitTestingMockitoCore
