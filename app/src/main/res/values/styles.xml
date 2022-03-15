@@ -8,5 +8,9 @@
         <item name="colorAccent">@color/purple_200</item>
     </style>
 
+    <style name="RoundCornerImageViewShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
 
 </resources>

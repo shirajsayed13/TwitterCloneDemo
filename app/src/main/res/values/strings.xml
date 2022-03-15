@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TwitterCloneDemo</string>
+    <string name="log_in_with_twitter">Log in with Twitter</string>
 </resources>
