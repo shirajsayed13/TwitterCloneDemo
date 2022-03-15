@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -20,6 +21,7 @@ import com.shiraj.twitterclonedemo.Constants.CONSUMER_SECRET
 import com.shiraj.twitterclonedemo.Constants.OAUTH_TOKEN
 import com.shiraj.twitterclonedemo.Constants.OAUTH_TOKEN_SECRET
 import com.shiraj.twitterclonedemo.Constants.OAUTH_VERIFIER
+import com.shiraj.twitterclonedemo.MainActivity
 import com.shiraj.twitterclonedemo.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -36,8 +38,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var twitterDialog: Dialog
     private lateinit var twitter: Twitter
-    private var accToken: AccessToken? = null
-    private var accessToken = ""
+    private var accessToken: AccessToken? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,10 +47,14 @@ class LoginActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val results = lifecycleScope.async { isLoggedIn() }
             val result = results.await()
-        }
-
-        findViewById<Button>(R.id.twitter_login_btn).setOnClickListener {
-            getRequestToken()
+            if (result) {
+                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                startActivity(intent)
+            } else {
+                findViewById<Button>(R.id.twitter_login_btn).setOnClickListener {
+                    getRequestToken()
+                }
+            }
         }
     }
 
@@ -120,7 +125,7 @@ class LoginActivity : AppCompatActivity() {
         private fun handleUrl(url: String) {
             val oauthVerifier = Uri.parse(url).getQueryParameter(OAUTH_VERIFIER) ?: ""
             lifecycleScope.launch(Dispatchers.Main) {
-                accToken =
+                accessToken =
                     withContext(Dispatchers.IO) { twitter.getOAuthAccessToken(oauthVerifier) }
                 getUserProfile()
             }
@@ -128,12 +133,14 @@ class LoginActivity : AppCompatActivity() {
     }
 
     suspend fun getUserProfile() {
-        val usr = withContext(Dispatchers.IO) { twitter.verifyCredentials() }
-        accessToken = accToken?.token ?: ""
-
+        val user = withContext(Dispatchers.IO) { twitter.verifyCredentials() }
         val sharedPreference = this.getPreferences(Context.MODE_PRIVATE)
-        sharedPreference.edit().putString(OAUTH_TOKEN, accToken?.token ?: "").apply()
-        sharedPreference.edit().putString(OAUTH_TOKEN_SECRET, accToken?.tokenSecret ?: "").apply()
+        sharedPreference.edit()
+            .putString(OAUTH_TOKEN, accessToken?.token ?: "")
+            .apply()
+        sharedPreference.edit()
+            .putString(OAUTH_TOKEN_SECRET, accessToken?.tokenSecret ?: "")
+            .apply()
     }
 
 
