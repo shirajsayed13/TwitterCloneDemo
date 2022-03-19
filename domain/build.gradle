@@ -44,6 +44,9 @@ dependencies {
     //DI Hilt
     implementation hilt.hiltAndroid
     kapt hilt.kaptHiltAndroidCompiler
+
+    implementation paging.paging
+
     // Coroutine Testing
     testImplementation testing.unitTestingCoroutines
     testImplementation testing.unitTestingMockitoCore

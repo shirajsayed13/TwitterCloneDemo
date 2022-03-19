@@ -14,7 +14,7 @@ ext {
     def lifecycleExtensions = "2.2.0"
     def swipeRefreshLayoutVersion = "1.1.0"
     def retrofitVersion = "2.9.0"
-    def retrofitConverterGsonVersion = "2.9.0"
+    def retrofitConverterMoshiVersion = "1.11.0"
     def okhttpVersion = "4.9.0"
     def okhttpLoggingInterceptorVersion = "4.8.0"
     def hiltAndroidVersion = "2.40.5"
@@ -33,6 +33,7 @@ ext {
     def androidTestEspressoCore = "3.4.0"
     def glideVersion = "4.13.0"
     def navVersion = '2.3.3'
+    def pagingVersion = '3.0.0-beta03'
 
     classPaths = [
             gradlePath      : "com.android.tools.build:gradle:$gradleVersion",
@@ -74,13 +75,18 @@ ext {
 
     network = [
             retrofit                : "com.squareup.retrofit2:retrofit:$retrofitVersion",
-            retrofitGsonConverter   : "com.squareup.retrofit2:converter-gson:$retrofitConverterGsonVersion",
             okhttp                  : "com.squareup.okhttp3:okhttp:$okhttpVersion",
+            moshiConverter                   : "com.squareup.retrofit2:converter-moshi:$retrofitVersion",
+            moshiKtx               : "com.squareup.moshi:moshi-kotlin:$retrofitConverterMoshiVersion",
             okhttpLoggingInterceptor: "com.squareup.okhttp3:logging-interceptor:$okhttpLoggingInterceptorVersion"
     ]
 
+    paging = [
+            paging : "androidx.paging:paging-runtime-ktx:$pagingVersion"
+    ]
+
     image = [
-            glide: "com.github.bumptech.glide:glide:$glideVersion",
+            glide        : "com.github.bumptech.glide:glide:$glideVersion",
             glideCompiler: "com.github.bumptech.glide:compiler:$glideVersion"
     ]
 

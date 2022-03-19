@@ -76,6 +76,8 @@ dependencies {
     implementation 'org.twitter4j:twitter4j-core:4.0.7'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5'
 
+    implementation paging.paging
+
     //DI Hilt
     implementation hilt.hiltAndroid
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

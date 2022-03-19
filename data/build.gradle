@@ -19,6 +19,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        buildConfigField "String", "API_BASE_URL", '"https://api.twitter.com/"'
     }
 
     buildTypes {
@@ -51,9 +53,11 @@ dependencies {
 
     //Network
     implementation network.retrofit
-    implementation network.retrofitGsonConverter
+    implementation network.moshiConverter
+    implementation network.moshiKtx
     implementation network.okhttp
     implementation network.okhttpLoggingInterceptor
+    implementation paging.paging
 
     //Room Database
     implementation androidx.roomDb

@@ -15,6 +15,7 @@ import android.webkit.WebViewClient
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.shiraj.data.response.UserProfile
 import com.shiraj.twitterclonedemo.Constants
 import com.shiraj.twitterclonedemo.Constants.CONSUMER_KEY
 import com.shiraj.twitterclonedemo.Constants.CONSUMER_SECRET
@@ -39,6 +40,9 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var twitterDialog: Dialog
     private lateinit var twitter: Twitter
     private var accessToken: AccessToken? = null
+    companion object {
+        var userProfile: UserProfile? = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,6 +139,9 @@ class LoginActivity : AppCompatActivity() {
     suspend fun getUserProfile() {
         val user = withContext(Dispatchers.IO) { twitter.verifyCredentials() }
         val sharedPreference = this.getPreferences(Context.MODE_PRIVATE)
+        sharedPreference.edit().putString("name", user.name).apply()
+        sharedPreference.edit().putString("username", user.screenName).apply()
+        sharedPreference.edit().putString("image_url", user.profileImageURLHttps).apply()
         sharedPreference.edit()
             .putString(OAUTH_TOKEN, accessToken?.token ?: "")
             .apply()
@@ -148,6 +155,11 @@ class LoginActivity : AppCompatActivity() {
         val sharedPreference = this.getPreferences(Context.MODE_PRIVATE)
         val accessToken = sharedPreference.getString(OAUTH_TOKEN, "")
         val accessTokenSecret = sharedPreference.getString(OAUTH_TOKEN_SECRET, "")
+        val name = sharedPreference.getString("name", "")
+        val userName = sharedPreference.getString("username", "")
+        val imageUrl = sharedPreference.getString("image_url", "")
+
+        userProfile = UserProfile(name, userName, imageUrl)
 
         val builder = ConfigurationBuilder()
         builder.setOAuthConsumerKey(CONSUMER_KEY)

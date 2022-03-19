@@ -1,32 +1,67 @@
 package com.shiraj.twitterclonedemo.timeline
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.shiraj.twitterclonedemo.R
+import com.shiraj.twitterclonedemo.base.BaseFragment
+import com.shiraj.twitterclonedemo.databinding.FragmentTimeLineBinding
+import com.shiraj.twitterclonedemo.login.LoginActivity.Companion.userProfile
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-class TimeLineFragment : Fragment() {
+@AndroidEntryPoint
+internal class TimeLineFragment :
+    BaseFragment<FragmentTimeLineBinding>(R.layout.fragment_time_line) {
 
-    companion object {
-        fun newInstance() = TimeLineFragment()
+    private val viewModel: TimeLineViewModel by viewModels()
+
+    private val viewAdapter: TweetAdapter by lazy(LazyThreadSafetyMode.NONE) { TweetAdapter() }
+
+    override fun bind(view: View) = FragmentTimeLineBinding.bind(view)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        setupRetryButton()
+        setupViewModel()
     }
 
-    private lateinit var viewModel: TimeLineViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_time_line, container, false)
+    private fun setupRetryButton() = with(binding.btnRetry) {
+        setOnClickListener { viewAdapter.retry() }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(TimeLineViewModel::class.java)
-        // TODO: Use the ViewModel
+    private fun setupRecyclerView() = with(binding.rvTweet) {
+        setHasFixedSize(true)
+        this.adapter = viewAdapter.withLoadStateHeaderAndFooter(
+            header = TweetStateAdapter { viewAdapter.retry() },
+            footer = TweetStateAdapter { viewAdapter.retry() }
+        )
+        viewAdapter.addLoadStateListener { loadState ->
+            val isEmptyList = loadState.refresh is LoadState.NotLoading &&
+                    viewAdapter.itemCount == 0
+            showEmptyList(isEmptyList)
+
+            binding.rvTweet.isVisible = loadState.source.refresh is LoadState.NotLoading
+            binding.pbItems.isVisible = loadState.source.refresh is LoadState.Loading
+            binding.btnRetry.isVisible = loadState.source.refresh is LoadState.Error
+        }
     }
 
+    private fun showEmptyList(isEmptyList: Boolean) {
+        binding.tvNoTweet.isVisible = isEmptyList
+    }
+
+    private fun setupViewModel() = with(viewModel) {
+        lifecycleScope.launch {
+            fetchTweets().collectLatest { pagingData ->
+                binding.pbItems.isVisible = false
+                viewAdapter.submitData(pagingData)
+            }
+        }
+    }
 }
