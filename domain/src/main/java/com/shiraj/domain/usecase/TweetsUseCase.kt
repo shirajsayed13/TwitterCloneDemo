@@ -1,4 +1,4 @@
-package com.shiraj.domain
+package com.shiraj.domain.usecase
 
 import androidx.paging.PagingData
 import com.shiraj.domain.model.Tweet

@@ -9,5 +9,14 @@
         android:id="@+id/timeLineFragment"
         android:name="com.shiraj.twitterclonedemo.timeline.TimeLineFragment"
         android:label="fragment_time_line"
-        tools:layout="@layout/fragment_time_line" />
+        tools:layout="@layout/fragment_time_line" >
+        <action
+            android:id="@+id/action_timeLineFragment_to_postTweetFragment"
+            app:destination="@id/postTweetFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/postTweetFragment"
+        android:name="com.shiraj.twitterclonedemo.post.PostTweetFragment"
+        android:label="fragment_post_tweet"
+        tools:layout="@layout/fragment_post_tweet" />
 </navigation>

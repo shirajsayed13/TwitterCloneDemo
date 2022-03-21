@@ -36,7 +36,6 @@ class TweetAdapter : PagingDataAdapter<Tweet, TweetAdapter.ViewHolder>(COMPARATO
                 ivBodyImage.visibility = View.GONE
                 tvBodyText.text = user.text
             }
-            tvUserHandle.text = user.createdAt
             tvReply.text = user.publicMetrics.replyCount.toString()
             tvRetweet.text = user.publicMetrics.retweetCount.toString()
             tvFav.text = user.publicMetrics.likeCount.toString()

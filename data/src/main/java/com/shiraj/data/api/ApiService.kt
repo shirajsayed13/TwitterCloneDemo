@@ -3,6 +3,7 @@ package com.shiraj.data.api
 import com.shiraj.data.response.TweetResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 /**
@@ -17,5 +18,11 @@ interface ApiService {
         @Query("max_results") maxResults: Int,
         @Query("tweet.fields") tweetFields: String
     ): TweetResponse
+
+    @POST("2/tweets")
+    suspend fun postTweets(
+        @Header("Authorization") header: String,
+        @Query("text") text: String
+    )
 
 }

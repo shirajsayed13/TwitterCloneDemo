@@ -158,6 +158,8 @@ class LoginActivity : AppCompatActivity() {
         val name = sharedPreference.getString("name", "")
         val userName = sharedPreference.getString("username", "")
         val imageUrl = sharedPreference.getString("image_url", "")
+        println("CHECK THIS access Token $accessToken")
+        println("CHECK THIS access accessTokenSecret $accessTokenSecret")
 
         userProfile = UserProfile(name, userName, imageUrl)
 

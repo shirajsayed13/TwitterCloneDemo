@@ -1,6 +1,7 @@
 package com.shiraj.data.repositories
 
-import com.shiraj.domain.TweetsUseCase
+import com.shiraj.domain.usecase.PostTweetUseCase
+import com.shiraj.domain.usecase.TweetsUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,4 +13,7 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindTweetsRepository(impl: TweetsUseCaseImpl): TweetsUseCase
+
+    @Binds
+    abstract fun bindPostTweetRepository(impl: PostTweetUseCaseImpl): PostTweetUseCase
 }

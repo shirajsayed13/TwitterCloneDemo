@@ -7,7 +7,7 @@ import com.shiraj.data.api.ApiService
 import com.shiraj.data.mappers.TweetMapperAlias
 import com.shiraj.data.paging.TweetPagingSource
 import com.shiraj.domain.model.Tweet
-import com.shiraj.domain.TweetsUseCase
+import com.shiraj.domain.usecase.TweetsUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

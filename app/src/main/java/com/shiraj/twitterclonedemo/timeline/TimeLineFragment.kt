@@ -5,11 +5,11 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.shiraj.twitterclonedemo.R
 import com.shiraj.twitterclonedemo.base.BaseFragment
 import com.shiraj.twitterclonedemo.databinding.FragmentTimeLineBinding
-import com.shiraj.twitterclonedemo.login.LoginActivity.Companion.userProfile
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -29,6 +29,13 @@ internal class TimeLineFragment :
         setupRecyclerView()
         setupRetryButton()
         setupViewModel()
+        navigateToPostTweetFragment()
+    }
+
+    private fun navigateToPostTweetFragment() {
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.action_timeLineFragment_to_postTweetFragment)
+        }
     }
 
     private fun setupRetryButton() = with(binding.btnRetry) {
