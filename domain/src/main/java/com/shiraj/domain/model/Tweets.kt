@@ -11,7 +11,7 @@ data class Tweet(
     val id: String,
     val publicMetrics: PublicMetrics,
     val text: String,
-    val attachments: Attachments
+    val attachments: Attachments?
 ) {
     data class PublicMetrics(
         val likeCount: Int,
@@ -25,11 +25,11 @@ data class Tweet(
     )
 
     data class Includes(
-        val width: Int,
-        val type: String,
-        val mediaKey: String,
-        val height: Int,
-        val url: String
+        val width: Int?,
+        val type: String?,
+        val mediaKey: String?,
+        val height: Int?,
+        val url: String?
     )
 }
 

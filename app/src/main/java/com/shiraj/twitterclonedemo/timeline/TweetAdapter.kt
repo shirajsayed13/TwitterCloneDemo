@@ -25,11 +25,6 @@ class TweetAdapter : PagingDataAdapter<Tweet, TweetAdapter.ViewHolder>(COMPARATO
         private val binding: ItemTweetBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(user: Tweet) = with(binding) {
-            if (user.attachments.mediaKeys.isNotEmpty()) {
-                ivBodyImage.visibility = View.VISIBLE
-            } else {
-                ivBodyImage.visibility = View.GONE
-            }
             tvBodyText.text = user.text
             tvReply.text = user.publicMetrics.replyCount.toString()
             tvRetweet.text = user.publicMetrics.retweetCount.toString()

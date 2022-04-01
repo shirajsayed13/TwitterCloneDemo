@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:textColor="@color/black"
-            android:textStyle="bold"
+            android:fontFamily="@font/roboto_bold"
             app:layout_constraintStart_toEndOf="@id/ivProfileImage"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Cristiano Ronaldo" />
@@ -68,6 +68,8 @@
                 android:id="@+id/tvBodyText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -91,9 +93,11 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clPublicMetric"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tvUserName"
             app:layout_constraintTop_toBottomOf="@id/clTweetBody">
 
@@ -104,6 +108,7 @@
                 android:layout_marginEnd="8dp"
                 android:drawablePadding="8dp"
                 android:gravity="center"
+                android:fontFamily="@font/roboto_regular"
                 app:drawableStartCompat="@drawable/ic_reply"
                 app:layout_constraintEnd_toStartOf="@+id/tvRetweet"
                 app:layout_constraintStart_toStartOf="parent"
@@ -119,6 +124,7 @@
                 android:layout_marginEnd="8dp"
                 android:drawablePadding="8dp"
                 android:gravity="center"
+                android:fontFamily="@font/roboto_regular"
                 app:drawableStartCompat="@drawable/ic_retweet"
                 app:layout_constraintEnd_toStartOf="@+id/tvFav"
                 app:layout_constraintStart_toEndOf="@id/tvReply"
@@ -134,7 +140,7 @@
                 android:layout_marginEnd="7dp"
                 android:drawablePadding="8dp"
                 android:gravity="center"
-
+                android:fontFamily="@font/roboto_regular"
                 app:drawableStartCompat="@drawable/ic_favorite"
                 app:layout_constraintEnd_toStartOf="@+id/tvShare"
                 app:layout_constraintStart_toEndOf="@id/tvRetweet"

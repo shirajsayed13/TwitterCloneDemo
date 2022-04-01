@@ -13,7 +13,7 @@ data class TweetResponse(
     @Json(name = "meta")
     val meta: Meta,
     @Json(name = "includes")
-    var includes: Includes
+    var includes: Includes?
 ) {
     @JsonClass(generateAdapter = true)
     data class Data(
@@ -26,7 +26,7 @@ data class TweetResponse(
         @Json(name = "text")
         val text: String,
         @Json(name = "attachments")
-        var attachments: Attachments
+        var attachments: Attachments?
     ) {
         @JsonClass(generateAdapter = true)
         data class PublicMetrics(
@@ -50,15 +50,15 @@ data class TweetResponse(
     @JsonClass(generateAdapter = true)
     data class Includes(
         @Json(name = "width")
-        val width: Int,
+        val width: Int?,
         @Json(name = "type")
-        val type: String,
+        val type: String?,
         @Json(name = "media_key")
-        val mediaKey: String,
+        val mediaKey: String?,
         @Json(name = "height")
-        val height: Int,
+        val height: Int?,
         @Json(name = "url")
-        val url: String
+        val url: String?
     )
 
     @JsonClass(generateAdapter = true)
@@ -66,7 +66,9 @@ data class TweetResponse(
         @Json(name = "newest_id")
         val newestId: String,
         @Json(name = "next_token")
-        val nextToken: String,
+        val nextToken: String?,
+        @Json(name = "previous_token")
+        val previousToken: String?,
         @Json(name = "oldest_id")
         val oldestId: String,
         @Json(name = "result_count")

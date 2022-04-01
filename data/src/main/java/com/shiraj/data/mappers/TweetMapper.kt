@@ -19,9 +19,11 @@ object TweetMapper : TweetMapperAlias {
                 retweetCount = publicMetrics.retweetCount
             ),
             text = text,
-            attachments = Tweet.Attachments(
-                mediaKeys = attachments.mediaKeys
-            )
+            attachments = attachments?.mediaKeys?.let {
+                Tweet.Attachments(
+                    mediaKeys = it
+                )
+            }
         )
     }
 }

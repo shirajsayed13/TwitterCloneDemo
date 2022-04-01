@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.shiraj.data.BuildConfig
 import com.shiraj.data.api.ApiService
+import com.shiraj.data.mappers.TweetIncludeMapperAlias
 import com.shiraj.data.mappers.TweetMapperAlias
 import com.shiraj.domain.model.Tweet
 import com.shiraj.domain.model.TweetResponseModel
@@ -29,7 +30,7 @@ class TweetPagingSource(
         return try {
             val response = apiService.getTweets(
                 BuildConfig.BEARER_TOKEN,
-                userId,
+                4695994044,
                 "replies,retweets",
                 10,
                 "created_at,public_metrics",
@@ -37,14 +38,13 @@ class TweetPagingSource(
                 "duration_ms,height,media_key,preview_image_url,public_metrics,type,url,width,alt_text"
             )
             val tweets = response.data.map(mapper::map)
-            val includes = response.includes.url
-            val mediaType = response.includes.mediaKey
-            println("CHECK THIS tweets $tweets")
-            println("CHECK THIS tweets includes $includes and mediaType $mediaType")
+            val includes = response.includes
+            val mediaType = response.includes?.mediaKey
+            val meta = response.meta
             LoadResult.Page(
                 data = tweets,
-                prevKey = "",
-                nextKey = response.meta.nextToken
+                prevKey = if (!meta.previousToken.isNullOrEmpty()) meta.previousToken else null,
+                nextKey = if (!meta.nextToken.isNullOrEmpty()) meta.nextToken else null,
             )
         } catch (exception: IOException) {
             return LoadResult.Error(exception)

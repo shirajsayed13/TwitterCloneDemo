@@ -10,6 +10,8 @@ import androidx.paging.LoadState
 import com.shiraj.twitterclonedemo.R
 import com.shiraj.twitterclonedemo.base.BaseFragment
 import com.shiraj.twitterclonedemo.databinding.FragmentTimeLineBinding
+import com.shiraj.twitterclonedemo.loadUrl
+import com.shiraj.twitterclonedemo.login.LoginActivity.Companion.userProfile
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -26,6 +28,7 @@ internal class TimeLineFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        userProfile?.imageUrl?.let { binding.ivProfileImage.loadUrl(it) }
         setupRecyclerView()
         setupRetryButton()
         setupViewModel()
