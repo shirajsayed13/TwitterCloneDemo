@@ -25,17 +25,12 @@ class TweetAdapter : PagingDataAdapter<Tweet, TweetAdapter.ViewHolder>(COMPARATO
         private val binding: ItemTweetBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(user: Tweet) = with(binding) {
-            if (user.text.contains("https://t.co/")) {
-                val listVal = user.text.split("https://")
-                tvBodyText.text = listVal[0]
-                if (listVal[1].isNotEmpty()) {
-                    ivBodyImage.visibility = View.VISIBLE
-                    ivBodyImage.loadUrl("https://${listVal[1]}")
-                }
+            if (user.attachments.mediaKeys.isNotEmpty()) {
+                ivBodyImage.visibility = View.VISIBLE
             } else {
                 ivBodyImage.visibility = View.GONE
-                tvBodyText.text = user.text
             }
+            tvBodyText.text = user.text
             tvReply.text = user.publicMetrics.replyCount.toString()
             tvRetweet.text = user.publicMetrics.retweetCount.toString()
             tvFav.text = user.publicMetrics.likeCount.toString()

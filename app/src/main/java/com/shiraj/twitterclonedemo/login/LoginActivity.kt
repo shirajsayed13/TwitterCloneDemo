@@ -40,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var twitterDialog: Dialog
     private lateinit var twitter: Twitter
     private var accessToken: AccessToken? = null
+
     companion object {
         var userProfile: UserProfile? = null
     }
@@ -140,6 +141,7 @@ class LoginActivity : AppCompatActivity() {
         val user = withContext(Dispatchers.IO) { twitter.verifyCredentials() }
         val sharedPreference = this.getPreferences(Context.MODE_PRIVATE)
         sharedPreference.edit().putString("name", user.name).apply()
+        sharedPreference.edit().putLong("user_id", user.id).apply()
         sharedPreference.edit().putString("username", user.screenName).apply()
         sharedPreference.edit().putString("image_url", user.profileImageURLHttps).apply()
         sharedPreference.edit()
@@ -158,10 +160,9 @@ class LoginActivity : AppCompatActivity() {
         val name = sharedPreference.getString("name", "")
         val userName = sharedPreference.getString("username", "")
         val imageUrl = sharedPreference.getString("image_url", "")
-        println("CHECK THIS access Token $accessToken")
-        println("CHECK THIS access accessTokenSecret $accessTokenSecret")
+        val userId = sharedPreference.getLong("user_id", 0L)
 
-        userProfile = UserProfile(name, userName, imageUrl)
+        userProfile = UserProfile(name, userName, imageUrl, userId)
 
         val builder = ConfigurationBuilder()
         builder.setOAuthConsumerKey(CONSUMER_KEY)

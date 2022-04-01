@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface TweetsUseCase {
 
-    fun fetch(): Flow<PagingData<Tweet>>
+    fun fetch(userId: Long): Flow<PagingData<Tweet>>
 }

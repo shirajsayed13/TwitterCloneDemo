@@ -21,6 +21,7 @@ android {
         consumerProguardFiles "consumer-rules.pro"
 
         buildConfigField "String", "API_BASE_URL", '"https://api.twitter.com/"'
+        buildConfigField "String", "BEARER_TOKEN", '"Bearer AAAAAAAAAAAAAAAAAAAAAD%2BaaAEAAAAAA5CaRS4uLn5e91%2BXaZzFK4JL0VU%3Dx2rh8Bj7DlKVFJRIjvj890h9WjUrzujar3f1ry9zjNq86MLOPQ"'
     }
 
     buildTypes {

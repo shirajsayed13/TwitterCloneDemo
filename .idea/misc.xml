@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/drawable/ic_repeat.xml" value="0.36822916666666666" />
         <entry key="app/src/main/res/drawable/ic_reply.xml" value="0.36822916666666666" />
         <entry key="app/src/main/res/drawable/rounded_corners.xml" value="0.36822916666666666" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.21875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.18697916666666667" />
         <entry key="app/src/main/res/layout/fragment_post_tweet.xml" value="0.34791666666666665" />

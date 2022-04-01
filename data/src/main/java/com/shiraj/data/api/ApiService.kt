@@ -1,22 +1,22 @@
 package com.shiraj.data.api
 
 import com.shiraj.data.response.TweetResponse
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 /**
  * Retrofit API Service
  */
 interface ApiService {
 
-    @GET("2/users/4695994044/tweets")
+    @GET("2/users/{id}/tweets")
     suspend fun getTweets(
         @Header("Authorization") header: String,
+        @Path("id") userId: Long,
         @Query("exclude") exclude: String,
         @Query("max_results") maxResults: Int,
-        @Query("tweet.fields") tweetFields: String
+        @Query("tweet.fields") tweetFields: String,
+        @Query("expansions") expansions: String,
+        @Query("media.fields") mediaFields: String,
     ): TweetResponse
 
     @POST("2/tweets")

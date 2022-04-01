@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.shiraj.domain.model.Tweet
 import com.shiraj.domain.usecase.TweetsUseCase
+import com.shiraj.twitterclonedemo.login.LoginActivity.Companion.userProfile
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -16,8 +17,9 @@ class TimeLineViewModel @Inject constructor(
 ): ViewModel() {
 
     fun fetchTweets(): Flow<PagingData<Tweet>> {
+        val id = userProfile?.userId
        return tweetsUseCase
-            .fetch()
+            .fetch(id!!)
             .cachedIn(viewModelScope)
     }
 }

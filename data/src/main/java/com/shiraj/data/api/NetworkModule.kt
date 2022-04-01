@@ -66,6 +66,6 @@ object NetworkModule {
     }
 
     @Provides
-    fun provideGithubService(retrofit: Retrofit) = retrofit
+    fun provideApiService(retrofit: Retrofit) = retrofit
         .create(ApiService::class.java)
 }

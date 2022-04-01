@@ -3,13 +3,17 @@ package com.shiraj.data.response
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.IgnoredOnParcel
+import java.util.*
 
 @JsonClass(generateAdapter = true)
 data class TweetResponse(
     @Json(name = "data")
     val `data`: List<Data>,
     @Json(name = "meta")
-    val meta: Meta
+    val meta: Meta,
+    @Json(name = "includes")
+    var includes: Includes
 ) {
     @JsonClass(generateAdapter = true)
     data class Data(
@@ -20,7 +24,9 @@ data class TweetResponse(
         @Json(name = "public_metrics")
         val publicMetrics: PublicMetrics,
         @Json(name = "text")
-        val text: String
+        val text: String,
+        @Json(name = "attachments")
+        var attachments: Attachments
     ) {
         @JsonClass(generateAdapter = true)
         data class PublicMetrics(
@@ -33,7 +39,27 @@ data class TweetResponse(
             @Json(name = "retweet_count")
             val retweetCount: Int
         )
+
+        @JsonClass(generateAdapter = true)
+        data class Attachments(
+            @Json(name = "media_keys")
+            var mediaKeys: List<String>
+        )
     }
+
+    @JsonClass(generateAdapter = true)
+    data class Includes(
+        @Json(name = "width")
+        val width: Int,
+        @Json(name = "type")
+        val type: String,
+        @Json(name = "media_key")
+        val mediaKey: String,
+        @Json(name = "height")
+        val height: Int,
+        @Json(name = "url")
+        val url: String
+    )
 
     @JsonClass(generateAdapter = true)
     data class Meta(

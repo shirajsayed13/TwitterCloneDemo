@@ -13,13 +13,14 @@ import javax.inject.Inject
 
 class TweetsUseCaseImpl @Inject constructor(
     private val apiService: ApiService,
-    private val mapperAlias: TweetMapperAlias
+    private val mapperAlias: TweetMapperAlias,
 ) : TweetsUseCase {
-    override fun fetch(): Flow<PagingData<Tweet>> = Pager(
+    override fun fetch(userId: Long): Flow<PagingData<Tweet>> = Pager(
         pagingSourceFactory = {
             TweetPagingSource(
                 apiService,
-                mapperAlias
+                mapperAlias,
+                userId
             )
         },
         config = PagingConfig(
