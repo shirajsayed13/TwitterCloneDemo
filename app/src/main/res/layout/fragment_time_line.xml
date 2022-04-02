@@ -26,8 +26,8 @@
             app:shapeAppearance="@style/CircularImageViewShape" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@drawable/twitter_logo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -97,10 +97,10 @@
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/twitter_blue"
         android:clickable="true"
-
         android:focusable="true"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/app_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

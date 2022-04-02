@@ -28,12 +28,13 @@ class TweetPagingSource(
     override suspend fun load(params: LoadParams<String>): LoadResult<String, Pair<List<Tweet>, List<TweetMediaModel>?>> {
         return try {
             val response = apiService.getTweets(
-                4695994044,
+                userId,
                 Constants.EXCLUDE,
                 10,
                 Constants.TWEET_FIELDS,
                 Constants.EXPANSIONS,
-                Constants.MEDIA_FIELDS
+                Constants.MEDIA_FIELDS,
+                params.key
             )
             val tweets = response.data.map(mapper::map)
             val includeRes = response.includes?.includeMedia?.map(includeMapper::map)

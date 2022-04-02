@@ -28,7 +28,7 @@ class TweetAdapter :
         private val binding: ItemTweetBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tweetPair: Pair<List<Tweet>, List<TweetMediaModel>?>) = with(binding) {
-            val user = tweetPair.first[position]
+            val user = tweetPair.first[bindingAdapterPosition]
             val tweetMedia = tweetPair.second
             if (user.attachments != null) {
                 user.attachments!!.mediaKeys.forEach { mediaKey ->

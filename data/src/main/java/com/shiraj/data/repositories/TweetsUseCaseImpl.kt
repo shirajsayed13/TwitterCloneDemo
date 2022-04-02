@@ -28,7 +28,8 @@ class TweetsUseCaseImpl @Inject constructor(
             )
         },
         config = PagingConfig(
-            pageSize = 10
+            pageSize = 1,
+            prefetchDistance = 1
         )
     ).flow
 }

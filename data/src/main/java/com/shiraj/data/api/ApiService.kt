@@ -16,6 +16,7 @@ interface ApiService {
         @Query("tweet.fields") tweetFields: String,
         @Query("expansions") expansions: String,
         @Query("media.fields") mediaFields: String,
+        @Query("pagination_token") paginationToken: String?
     ): TweetResponse
 
     @POST("2/tweets")
