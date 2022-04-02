@@ -1,14 +1,14 @@
 package com.shiraj.data.mappers
 
 import com.shiraj.data.response.TweetResponse
-import com.shiraj.domain.model.Tweet
+import com.shiraj.domain.model.TweetMediaModel
 
 
-typealias TweetIncludeMapperAlias = Mapper<TweetResponse.Includes, Tweet.Includes>
+typealias TweetIncludeMapperAlias = Mapper<TweetResponse.IncludeMedia.TweetMedia, TweetMediaModel>
 
 object IncludeMapper : TweetIncludeMapperAlias {
-    override fun map(input: TweetResponse.Includes) = with(input) {
-        Tweet.Includes(
+    override fun map(input: TweetResponse.IncludeMedia.TweetMedia) = with(input) {
+        TweetMediaModel(
             width = width,
             type = type,
             mediaKey = mediaKey,

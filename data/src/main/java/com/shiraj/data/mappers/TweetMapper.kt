@@ -1,9 +1,7 @@
 package com.shiraj.data.mappers
 
 import com.shiraj.data.response.TweetResponse
-import com.shiraj.domain.model.Meta
 import com.shiraj.domain.model.Tweet
-import com.shiraj.domain.model.TweetResponseModel
 
 typealias TweetMapperAlias = Mapper<TweetResponse.Data, Tweet>
 

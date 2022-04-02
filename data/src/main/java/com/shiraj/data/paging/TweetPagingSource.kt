@@ -3,46 +3,46 @@ package com.shiraj.data.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.shiraj.data.BuildConfig
+import com.shiraj.data.Constants
 import com.shiraj.data.api.ApiService
 import com.shiraj.data.mappers.TweetIncludeMapperAlias
 import com.shiraj.data.mappers.TweetMapperAlias
 import com.shiraj.domain.model.Tweet
-import com.shiraj.domain.model.TweetResponseModel
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
+import com.shiraj.domain.model.TweetMediaModel
 import retrofit2.HttpException
 import java.io.IOException
 
 class TweetPagingSource(
     private val apiService: ApiService,
     private val mapper: TweetMapperAlias,
+    private val includeMapper: TweetIncludeMapperAlias,
     private val userId: Long
-) : PagingSource<String, Tweet>() {
+) : PagingSource<String, Pair<List<Tweet>, List<TweetMediaModel>?>>() {
 
-    override fun getRefreshKey(state: PagingState<String, Tweet>): String? {
+    override fun getRefreshKey(state: PagingState<String, Pair<List<Tweet>, List<TweetMediaModel>?>>): String? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey
         }
     }
 
-    override suspend fun load(params: LoadParams<String>): LoadResult<String, Tweet> {
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, Pair<List<Tweet>, List<TweetMediaModel>?>> {
         return try {
             val response = apiService.getTweets(
                 BuildConfig.BEARER_TOKEN,
                 4695994044,
-                "replies,retweets",
+                Constants.EXCLUDE,
                 10,
-                "created_at,public_metrics",
-                "attachments.media_keys",
-                "duration_ms,height,media_key,preview_image_url,public_metrics,type,url,width,alt_text"
+                Constants.TWEET_FIELDS,
+                Constants.EXPANSIONS,
+                Constants.MEDIA_FIELDS
             )
             val tweets = response.data.map(mapper::map)
-            val includes = response.includes
-            val mediaType = response.includes?.mediaKey
+            val includeRes = response.includes?.includeMedia?.map(includeMapper::map)
+            val pairResult = Pair(tweets, includeRes)
             val meta = response.meta
             LoadResult.Page(
-                data = tweets,
+                data = listOf(pairResult),
                 prevKey = if (!meta.previousToken.isNullOrEmpty()) meta.previousToken else null,
                 nextKey = if (!meta.nextToken.isNullOrEmpty()) meta.nextToken else null,
             )

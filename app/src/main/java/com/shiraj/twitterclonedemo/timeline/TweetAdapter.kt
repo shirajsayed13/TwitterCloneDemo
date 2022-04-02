@@ -7,11 +7,14 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.shiraj.domain.model.Tweet
+import com.shiraj.domain.model.TweetMediaModel
 import com.shiraj.twitterclonedemo.databinding.ItemTweetBinding
+import com.shiraj.twitterclonedemo.getDateFromString
 import com.shiraj.twitterclonedemo.loadUrl
 import com.shiraj.twitterclonedemo.login.LoginActivity.Companion.userProfile
 
-class TweetAdapter : PagingDataAdapter<Tweet, TweetAdapter.ViewHolder>(COMPARATOR) {
+class TweetAdapter :
+    PagingDataAdapter<Pair<List<Tweet>, List<TweetMediaModel>?>, TweetAdapter.ViewHolder>(COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
         ItemTweetBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,7 +27,23 @@ class TweetAdapter : PagingDataAdapter<Tweet, TweetAdapter.ViewHolder>(COMPARATO
     class ViewHolder(
         private val binding: ItemTweetBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(user: Tweet) = with(binding) {
+        fun bind(tweetPair: Pair<List<Tweet>, List<TweetMediaModel>?>) = with(binding) {
+            val user = tweetPair.first[position]
+            val tweetMedia = tweetPair.second
+            if (user.attachments != null) {
+                user.attachments!!.mediaKeys.forEach { mediaKey ->
+                    tweetMedia?.forEach { media ->
+                        if (mediaKey == media.mediaKey) {
+                            ivBodyImage.visibility = View.VISIBLE
+                            media.url?.let { url -> ivBodyImage.loadUrl(url) }
+                        } else {
+                            ivBodyImage.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+            val dateFromString = "  • ${getDateFromString(user.createdAt)}"
+            tvTimeStamp.text = dateFromString
             tvBodyText.text = user.text
             tvReply.text = user.publicMetrics.replyCount.toString()
             tvRetweet.text = user.publicMetrics.retweetCount.toString()
@@ -37,12 +56,19 @@ class TweetAdapter : PagingDataAdapter<Tweet, TweetAdapter.ViewHolder>(COMPARATO
     }
 
     companion object {
-        private val COMPARATOR = object : DiffUtil.ItemCallback<Tweet>() {
-            override fun areItemsTheSame(oldItem: Tweet, newItem: Tweet): Boolean =
-                oldItem.id == newItem.id
+        private val COMPARATOR =
+            object : DiffUtil.ItemCallback<Pair<List<Tweet>, List<TweetMediaModel>?>>() {
+                override fun areItemsTheSame(
+                    oldItem: Pair<List<Tweet>, List<TweetMediaModel>?>,
+                    newItem: Pair<List<Tweet>, List<TweetMediaModel>?>
+                ): Boolean =
+                    oldItem == newItem
 
-            override fun areContentsTheSame(oldItem: Tweet, newItem: Tweet): Boolean =
-                oldItem == newItem
-        }
+                override fun areContentsTheSame(
+                    oldItem: Pair<List<Tweet>, List<TweetMediaModel>?>,
+                    newItem: Pair<List<Tweet>, List<TweetMediaModel>?>
+                ): Boolean =
+                    oldItem == newItem
+            }
     }
 }

@@ -1,11 +1,5 @@
 package com.shiraj.domain.model
 
-data class TweetResponseModel(
-    val `data`: List<Tweet>,
-    val meta: Meta,
-    val includes: Tweet.Includes
-)
-
 data class Tweet(
     val createdAt: String,
     val id: String,
@@ -23,15 +17,15 @@ data class Tweet(
     data class Attachments(
         val mediaKeys: List<String>
     )
-
-    data class Includes(
-        val width: Int?,
-        val type: String?,
-        val mediaKey: String?,
-        val height: Int?,
-        val url: String?
-    )
 }
+
+data class TweetMediaModel(
+    val width: Int?,
+    val type: String?,
+    val mediaKey: String?,
+    val height: Int?,
+    val url: String?
+)
 
 data class Meta(
     val newestId: String,

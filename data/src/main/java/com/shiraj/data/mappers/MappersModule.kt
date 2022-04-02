@@ -11,4 +11,7 @@ object MappersModule {
 
     @Provides
     fun provideTweetMapper(): TweetMapperAlias = TweetMapper
+
+    @Provides
+    fun provideTweetIncludeMapper(): TweetIncludeMapperAlias = IncludeMapper
 }
