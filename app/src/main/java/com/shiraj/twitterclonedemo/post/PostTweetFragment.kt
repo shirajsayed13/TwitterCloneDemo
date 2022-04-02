@@ -23,7 +23,7 @@ class PostTweetFragment : BaseFragment<FragmentPostTweetBinding>(R.layout.fragme
     private fun setupView() {
         val tweetText = binding.editText.text.toString()
         binding.button.setOnClickListener {
-            viewModel.postTweet(tweetText)
+            //viewModel.postTweet(tweetText)
         }
     }
 
