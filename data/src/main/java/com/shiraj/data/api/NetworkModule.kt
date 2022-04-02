@@ -46,6 +46,7 @@ object NetworkModule {
             val original: Request = chain.request()
             val requestBuilder: Request.Builder = original.newBuilder()
                 .addHeader("Accept", "Application/JSON")
+                .addHeader("Authorization", BuildConfig.BEARER_TOKEN)
             val request: Request = requestBuilder.build()
             chain.proceed(request)
         }
@@ -59,6 +60,7 @@ object NetworkModule {
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(interceptor)
             .callTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)

@@ -26,10 +26,3 @@ data class TweetMediaModel(
     val height: Int?,
     val url: String?
 )
-
-data class Meta(
-    val newestId: String,
-    val nextToken: String,
-    val oldestId: String,
-    val resultCount: Int
-)

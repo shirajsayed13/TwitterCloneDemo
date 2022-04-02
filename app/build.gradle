@@ -21,6 +21,11 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        buildConfigField "String", "CONSUMER_KEY", '"32A99JWCroEYuOfI0miB7crIY"'
+        buildConfigField "String", "CONSUMER_SECRET", '"nvemKABJ3QHE8SAIOrvZc1ziTSTOyWDMUg7O62X3xx3FSaAUQ1"'
+        buildConfigField "String", "CALLBACK_URL", '"twitterclonebyshiraj://"'
+
     }
 
     buildTypes {

@@ -10,7 +10,6 @@ interface ApiService {
 
     @GET("2/users/{id}/tweets")
     suspend fun getTweets(
-        @Header("Authorization") header: String,
         @Path("id") userId: Long,
         @Query("exclude") exclude: String,
         @Query("max_results") maxResults: Int,

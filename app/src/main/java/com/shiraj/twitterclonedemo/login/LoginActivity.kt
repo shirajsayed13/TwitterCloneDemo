@@ -16,9 +16,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.shiraj.data.response.UserProfile
-import com.shiraj.twitterclonedemo.Constants
-import com.shiraj.twitterclonedemo.Constants.CONSUMER_KEY
-import com.shiraj.twitterclonedemo.Constants.CONSUMER_SECRET
+import com.shiraj.twitterclonedemo.BuildConfig
 import com.shiraj.twitterclonedemo.Constants.OAUTH_TOKEN
 import com.shiraj.twitterclonedemo.Constants.OAUTH_TOKEN_SECRET
 import com.shiraj.twitterclonedemo.Constants.OAUTH_VERIFIER
@@ -67,8 +65,8 @@ class LoginActivity : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.Default) {
             val builder = ConfigurationBuilder()
                 .setDebugEnabled(true)
-                .setOAuthConsumerKey(CONSUMER_KEY)
-                .setOAuthConsumerSecret(CONSUMER_SECRET)
+                .setOAuthConsumerKey(BuildConfig.CONSUMER_KEY)
+                .setOAuthConsumerSecret(BuildConfig.CONSUMER_SECRET)
                 .setIncludeEmailEnabled(true)
 
             twitter = TwitterFactory(builder.build()).instance
@@ -105,9 +103,9 @@ class LoginActivity : AppCompatActivity() {
             view: WebView?,
             request: WebResourceRequest?
         ): Boolean {
-            if (request?.url.toString().startsWith(Constants.CALLBACK_URL)) {
+            if (request?.url.toString().startsWith(BuildConfig.CALLBACK_URL)) {
                 handleUrl(request?.url.toString())
-                if (request?.url.toString().contains(Constants.CALLBACK_URL)) {
+                if (request?.url.toString().contains(BuildConfig.CALLBACK_URL)) {
                     twitterDialog.dismiss()
                 }
                 return true
@@ -116,10 +114,10 @@ class LoginActivity : AppCompatActivity() {
         }
 
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-            if (url.startsWith(Constants.CALLBACK_URL)) {
+            if (url.startsWith(BuildConfig.CALLBACK_URL)) {
                 handleUrl(url)
 
-                if (url.contains(Constants.CALLBACK_URL)) {
+                if (url.contains(BuildConfig.CALLBACK_URL)) {
                     twitterDialog.dismiss()
                 }
                 return true
@@ -165,8 +163,8 @@ class LoginActivity : AppCompatActivity() {
         userProfile = UserProfile(name, userName, imageUrl, userId)
 
         val builder = ConfigurationBuilder()
-        builder.setOAuthConsumerKey(CONSUMER_KEY)
-            .setOAuthConsumerSecret(CONSUMER_SECRET)
+        builder.setOAuthConsumerKey(BuildConfig.CONSUMER_KEY)
+            .setOAuthConsumerSecret(BuildConfig.CONSUMER_SECRET)
             .setOAuthAccessToken(accessToken)
             .setOAuthAccessTokenSecret(accessTokenSecret)
         twitter = TwitterFactory(builder.build()).instance

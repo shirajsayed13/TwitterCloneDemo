@@ -2,7 +2,6 @@ package com.shiraj.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.shiraj.data.BuildConfig
 import com.shiraj.data.Constants
 import com.shiraj.data.api.ApiService
 import com.shiraj.data.mappers.TweetIncludeMapperAlias
@@ -29,7 +28,6 @@ class TweetPagingSource(
     override suspend fun load(params: LoadParams<String>): LoadResult<String, Pair<List<Tweet>, List<TweetMediaModel>?>> {
         return try {
             val response = apiService.getTweets(
-                BuildConfig.BEARER_TOKEN,
                 4695994044,
                 Constants.EXCLUDE,
                 10,
